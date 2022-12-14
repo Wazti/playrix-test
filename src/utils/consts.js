@@ -2,7 +2,10 @@ const SIZES = Object.freeze({
   width: 1390,
   height: 640,
 });
-
+const SIZE_MOBILE = Object.freeze({
+  width: 540,
+  height: 960,
+});
 const POSITIONS = Object.freeze({
   BACKGROUND: {
     DESKTOP: { x: 0, y: 0 },
@@ -219,5 +222,5 @@ const SPRITE_CONFIG = Object.freeze({
 });
 
 export {
-  SIZES, POSITIONS, SPRITE_CONFIG,
+  SIZES, POSITIONS, SPRITE_CONFIG, SIZE_MOBILE,
 };

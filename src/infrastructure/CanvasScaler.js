@@ -1,9 +1,13 @@
-import { SIZES } from '../utils/consts';
+import { SIZES, SIZE_MOBILE } from '../utils/consts';
 
 export default class CanvasScaler {
-  constructor(app) {
+  constructor(app, container) {
     this.renderer = app.renderer;
     this.app = app;
+    this.defaultRationLandscape = SIZES.width / SIZES.height;
+    this.defaultRationPortrait = SIZE_MOBILE.width / SIZES.height;
+    this.parentContainer = container;
+    console.log(this.parentContainer);
 
     this.resizeHandler();
     window.addEventListener('resize', () => {
@@ -12,27 +16,42 @@ export default class CanvasScaler {
   }
 
   resizeHandler() {
-    console.log(this.renderer);
-    // const scaleFactor = Math.min(
-    //   window.innerWidth / SIZES.width,
-    //   window.innerHeight / SIZES.height,
-    // );
-    // const newWidth = Math.ceil(SIZES.width * scaleFactor);
-    // const newHeight = Math.ceil(SIZES.height * scaleFactor);
+    let w = window.innerWidth;
+    let h = window.innerHeight;
 
-    // this.renderer.view.style.width = `${newWidth}px`;
-    // this.renderer.view.style.height = `${newHeight}px`;
+    const ratio = window.innerWidth / window.innerHeight;
 
-    // this.renderer.resize(newWidth, newHeight);
-    const parent = this.renderer.view;
+    if (window.innerWidth > window.innerHeight) {
+      if (ratio >= this.defaultRationLandscape) {
+        w = window.innerHeight * this.defaultRationLandscape;
+      } else {
+        h = window.innerWidth / this.defaultRationLandscape;
+      }
+      this.parentContainer.width = 1390;
+      this.parentContainer.height = 724;
+      this.parentContainer.x = 0;
+      this.parentContainer.y = 0;
+    } else {
+      if (ratio > this.defaultRationPortrait) {
+        h = window.innerWidth / this.defaultRationPortrait;
+      } else {
+        w = window.innerHeight * this.defaultRationPortrait;
+      }
+      console.log(this.defaultRationPortrait);
+      // this.parentContainer.width = 540;
+      // this.parentContainer.height = 960;
+      this.parentContainer.x = 0;
+      this.parentContainer.pivot.x = 0;
+      this.parentContainer.y = 0;
+    }
 
-    // Resize the renderer
-    this.renderer.resize(parent.clientWidth, parent.clientHeight);
-
-    // You can use the 'screen' property as the renderer visible
-    // area, this is more useful than view.width/height because
-    // it handles resolution
-    this.renderer.position.set(this.app.screen.width, this.app.screen.height);
-    // mainContainer.scale.set(scaleFactor);
+    console.log(this.parentContainer.width, this.parentContainer.height);
+    this.app.view.style.width = `${w}px`;
+    this.app.view.style.height = `${h}px`;
   }
+
+  // The dynamic width and height lets us do some smart
+  // scaling of the main game content; here we're just
+  // using it to maintain a 9:16 aspect ratio and giving
+  // our scenes a 375x667 stage to work with
 }
