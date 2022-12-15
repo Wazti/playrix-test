@@ -1,5 +1,7 @@
 # playrix-test
 
+[DEMO](https://wazti.github.io/playrix-test/)
+
 ### Тестовое задание Кудри Ивана
 
 ## Build Setup
