@@ -65,7 +65,7 @@ export default class FinalView {
       .easing(TWEEN.Easing.Cubic.InOut)
       .start();
 
-    this.handleResize();
+    this.handleResize(this.canvasScaler.getTypeResize());
   }
 
   createFinalPicture() {
