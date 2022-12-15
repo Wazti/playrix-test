@@ -4,7 +4,7 @@ const SIZES = Object.freeze({
 });
 const SIZE_MOBILE = Object.freeze({
   width: 540,
-  height: 960,
+  height: 780,
 });
 const POSITIONS = Object.freeze({
   BACKGROUND: {
@@ -86,6 +86,7 @@ const POSITIONS = Object.freeze({
   },
   CONTINUE_BUTTON: {
     DESKTOP: { x: 695, y: 570 },
+    MOBILE: { x: 925, y: 570 },
   },
   LOGO: {
     DESKTOP: { x: 40, y: 10 },

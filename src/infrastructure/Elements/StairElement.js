@@ -3,9 +3,9 @@ import TWEEN from '@tweenjs/tween.js';
 import { initSpriteFromConfig } from '../../utils/helpers';
 
 export default class StairElement {
-  constructor(container, key, { loaderModule }) {
+  constructor(container, key, { assetModule }) {
     this.container = container;
-    this.loaderModule = loaderModule;
+    this.assetModule = assetModule;
     this.currentInteractiveDecor = null;
     this.key = key;
     this.initSprite();
@@ -14,7 +14,7 @@ export default class StairElement {
   initSprite() {
     this.currentInteractiveDecor = initSpriteFromConfig(
       this.key,
-      this.loaderModule.getSpriteByKey(this.key),
+      this.assetModule.getSpriteByKey(this.key),
     );
     this.currentInteractiveDecor.alpha = 0;
     this.startPosY = this.currentInteractiveDecor.y;

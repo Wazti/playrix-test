@@ -5,10 +5,10 @@ import { ELEMENTS_DECOR, STATIC_ELEMENTS } from '../../utils/filesPathes';
 import { POSITIONS } from '../../utils/consts';
 
 export default class DecorView {
-  constructor(app, { loaderModule, container }) {
+  constructor(app, { assetModule, container }) {
     this.app = app;
 
-    this.loaderModule = loaderModule;
+    this.assetModule = assetModule;
     this.container = container;
 
     this.sprites = {};
@@ -20,7 +20,7 @@ export default class DecorView {
   }
 
   createElement(key, withAnimation = false) {
-    this.sprites[key] = initSpriteFromConfig(key, this.loaderModule.getSpriteByKey(key));
+    this.sprites[key] = initSpriteFromConfig(key, this.assetModule.getSpriteByKey(key));
 
     this.sprites[key].alpha = withAnimation ? 0 : 1;
 

@@ -7,9 +7,9 @@ import { UI_ELEMENTS } from '../../utils/filesPathes';
 import { initSpriteFromConfig } from '../../utils/helpers';
 
 export default class SelectElementUI {
-  constructor(container, containerKey, textureKey, { loaderModule }) {
+  constructor(container, containerKey, textureKey, { assetModule }) {
     this.parentContainer = container;
-    this.loaderModule = loaderModule;
+    this.assetModule = assetModule;
     this.containerKey = containerKey;
     this.textureKey = textureKey;
 
@@ -80,14 +80,14 @@ export default class SelectElementUI {
   initSprites() {
     this.backElement = initSpriteFromConfig(
       UI_ELEMENTS.CIRCLEUI,
-      this.loaderModule.getSpriteByKey(UI_ELEMENTS.CIRCLEUI),
+      this.assetModule.getSpriteByKey(UI_ELEMENTS.CIRCLEUI),
     );
 
     this.backElement.anchor.set(0.5);
 
     this.selectElement = initSpriteFromConfig(
       UI_ELEMENTS.CIRCLEUI_CHOSEN,
-      this.loaderModule.getSpriteByKey(UI_ELEMENTS.CIRCLEUI_CHOSEN),
+      this.assetModule.getSpriteByKey(UI_ELEMENTS.CIRCLEUI_CHOSEN),
     );
 
     this.selectElement.anchor.set(0.5);
@@ -95,7 +95,7 @@ export default class SelectElementUI {
 
     this.itemElement = initSpriteFromConfig(
       this.textureKey,
-      this.loaderModule.getSpriteByKey(this.textureKey),
+      this.assetModule.getSpriteByKey(this.textureKey),
     );
 
     this.itemElement.anchor.set(0.5);

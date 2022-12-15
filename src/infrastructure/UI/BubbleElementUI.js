@@ -6,12 +6,12 @@ import { POSITIONS } from '../../utils/consts';
 import { initSpriteFromConfig, delayedCall } from '../../utils/helpers';
 
 export default class BubbleElementUI {
-  constructor(container, forward, back, { loaderModule }) {
+  constructor(container, forward, back, { assetModule }) {
     this.parentContainer = container;
     this.forwardKey = forward;
     this.backKey = back;
     this.eventEmitter = new PIXI.utils.EventEmitter();
-    this.loaderModule = loaderModule;
+    this.assetModule = assetModule;
 
     this.initContainer();
     this.initSprite();
@@ -48,12 +48,12 @@ export default class BubbleElementUI {
   initSprite() {
     this.forwardElement = initSpriteFromConfig(
       this.forwardKey,
-      this.loaderModule.getSpriteByKey(this.forwardKey),
+      this.assetModule.getSpriteByKey(this.forwardKey),
     );
 
     this.backElement = initSpriteFromConfig(
       this.backKey,
-      this.loaderModule.getSpriteByKey(this.backKey),
+      this.assetModule.getSpriteByKey(this.backKey),
     );
 
     this.backElement.anchor.set(0.5);

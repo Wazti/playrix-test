@@ -5,16 +5,17 @@ import { initSpriteFromConfig } from '../../utils/helpers';
 import ContinueElementUI from '../UI/ContinueElementUI';
 
 export default class UIView {
-  constructor(app, { loaderModule, container }) {
+  constructor(app, { assetModule, container, canvasScaler }) {
     this.app = app;
     this.parentContainer = container;
-    this.loaderModule = loaderModule;
+    this.assetModule = assetModule;
+    this.canvasScaler = canvasScaler;
     this.eventEmitter = new PIXI.utils.EventEmitter();
 
     this.initContainer();
     this.addLogo();
 
-    this.continueButton = new ContinueElementUI(this.container, { loaderModule });
+    this.continueButton = new ContinueElementUI(this.container, { assetModule, canvasScaler });
     this.continueButton.on('handleClick', () => { this.handleButtonClick(); }, this);
   }
 
@@ -34,7 +35,7 @@ export default class UIView {
   addLogo() {
     this.logo = initSpriteFromConfig(
       UI_ELEMENTS.LOGO,
-      this.loaderModule.getSpriteByKey(UI_ELEMENTS.LOGO),
+      this.assetModule.getSpriteByKey(UI_ELEMENTS.LOGO),
     );
 
     this.container.addChild(this.logo);

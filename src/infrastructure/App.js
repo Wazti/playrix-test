@@ -1,21 +1,21 @@
 import * as PIXI from 'pixi.js';
 
 import TWEEN from '@tweenjs/tween.js';
-import LoadingModule from './LoadingModule';
+import AssetModule from './AssetModule';
 import { SIZES } from '../utils/consts';
 import CanvasScaler from './CanvasScaler';
-import DecorView from './Views/DecorView';
-import InteractiveView from './Views/InteractiveView';
-import UIView from './Views/UIView';
-import FinalView from './Views/FinalView';
+import DecorView from './views/DecorView';
+import InteractiveView from './views/InteractiveView';
+import UIView from './views/UIView';
+import FinalView from './views/FinalView';
 
 export default class App {
   constructor() {
     this.initialRender();
 
-    this.loaderModule = new LoadingModule();
+    this.assetModule = new AssetModule();
 
-    this.loaderModule.loadDefault(() => {
+    this.assetModule.loadDefault(() => {
       this.setup();
     });
   }
@@ -24,15 +24,17 @@ export default class App {
     this.container = new PIXI.Container();
 
     this.container.sortableChildren = true;
+    this.canvasScaler = new CanvasScaler(this.app, this.container);
+
     this.app.stage.addChild(this.container);
 
     this.decorView = new DecorView(this.app, {
-      loaderModule: this.loaderModule,
+      assetModule: this.assetModule,
       container: this.container,
     });
 
     this.interactiveView = new InteractiveView(this.app, {
-      loaderModule: this.loaderModule,
+      assetModule: this.assetModule,
       container: this.container,
     });
 
@@ -41,17 +43,17 @@ export default class App {
     }, this);
 
     this.uiView = new UIView(this.app, {
-      loaderModule: this.loaderModule,
+      assetModule: this.assetModule,
       container: this.container,
+      canvasScaler: this.canvasScaler,
     });
 
     this.uiView.on('handleContinue', () => { console.log('Continue pressed'); });
 
     this.finalView = new FinalView(this.app, {
-      loaderModule: this.loaderModule,
+      assetModule: this.assetModule,
       container: this.container,
     });
-    this.canvasScaler = new CanvasScaler(this.app, this.container);
   }
 
   initialRender() {

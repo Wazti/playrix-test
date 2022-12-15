@@ -7,15 +7,15 @@ import { UI_ELEMENTS } from '../../utils/filesPathes';
 import { initSpriteFromConfig } from '../../utils/helpers';
 
 export default class FinalView {
-  constructor(app, { loaderModule, container }) {
+  constructor(app, { assetModule, container }) {
     this.app = app;
-    this.loadingModule = loaderModule;
+    this.assetModule = assetModule;
     this.parentContainer = container;
     this.loadSprite();
   }
 
   loadSprite() {
-    this.loadingModule.loadSprite(UI_ELEMENTS.FINAL);
+    this.assetModule.loadSprite(UI_ELEMENTS.FINAL);
   }
 
   showView() {
@@ -51,7 +51,7 @@ export default class FinalView {
   createFinalPicture() {
     this.final = initSpriteFromConfig(
       UI_ELEMENTS.FINAL,
-      this.loadingModule.getSpriteByKey(UI_ELEMENTS.FINAL),
+      this.assetModule.getSpriteByKey(UI_ELEMENTS.FINAL),
     );
 
     this.final.anchor.set(0.5);

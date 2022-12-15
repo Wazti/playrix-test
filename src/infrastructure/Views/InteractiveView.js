@@ -2,14 +2,14 @@ import * as PIXI from 'pixi.js';
 
 import { INTERACTIVE_ELEMENTS, UI_ELEMENTS } from '../../utils/filesPathes';
 import { initSpriteFromConfig } from '../../utils/helpers';
-import StairElement from '../Elements/StairElement';
+import StairElement from '../elements/StairElement';
 import BubbleElementUI from '../UI/BubbleElementUI';
 import ListElementsUI from '../UI/ListElementsUI';
 
 export default class InteractiveView {
-  constructor(app, { loaderModule, container }) {
+  constructor(app, { assetModule, container }) {
     this.app = app;
-    this.loaderModule = loaderModule;
+    this.assetModule = assetModule;
     this.parentContainer = container;
     this.container = null;
 
@@ -24,7 +24,7 @@ export default class InteractiveView {
   }
 
   async clickBubble() {
-    await this.loaderModule.loadSprites([
+    await this.assetModule.loadSprites([
       UI_ELEMENTS.CIRCLEUI_CHOSEN,
       UI_ELEMENTS.CIRCLEUI,
       UI_ELEMENTS.MINI_FIRST,
@@ -39,7 +39,7 @@ export default class InteractiveView {
     this.createButtonOk();
 
     this.listElements = new ListElementsUI(this.container, {
-      loaderModule: this.loaderModule,
+      assetModule: this.assetModule,
       parentContainer: this.parentContainer,
     });
 
@@ -70,7 +70,7 @@ export default class InteractiveView {
     this.defaultStair = new StairElement(
       this.parentContainer,
       INTERACTIVE_ELEMENTS.OLDSTAIR,
-      { loaderModule: this.loaderModule },
+      { assetModule: this.assetModule },
     );
     this.defaultStair.showElement();
   }
@@ -78,7 +78,7 @@ export default class InteractiveView {
   createButtonOk() {
     this.okButton = initSpriteFromConfig(
       UI_ELEMENTS.OK_BUTTON,
-      this.loaderModule.getSpriteByKey(UI_ELEMENTS.OK_BUTTON),
+      this.assetModule.getSpriteByKey(UI_ELEMENTS.OK_BUTTON),
     );
     this.okButton.anchor.set(0.5);
     this.okButton.interactive = true;
@@ -91,7 +91,7 @@ export default class InteractiveView {
       UI_ELEMENTS.ICON_HAMMER,
       UI_ELEMENTS.ICON_HAMMER_BACK,
 
-      { loaderModule: this.loaderModule },
+      { assetModule: this.assetModule },
     );
 
     this.bubbleElement.on('click', () => {
