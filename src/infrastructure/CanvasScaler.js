@@ -3,6 +3,8 @@ import * as PIXI from 'pixi.js';
 import TWEEN from '@tweenjs/tween.js';
 import debounce from 'lodash.debounce';
 
+import { delayedCall } from '../utils/helpers';
+
 import {
   TYPES_RESIZE,
   SIZES, SIZES_MOBILE, POSITIONS, SPRITE_CONFIG_MOBILE, SPRITE_CONFIG,
@@ -39,10 +41,10 @@ export default class CanvasScaler {
       this.resizeHandler();
     }, 200);
 
-    setTimeout(() => {
+    delayedCall(100, () => {
       this.resizeCanvas();
       this.resizeHandler();
-    }, 10);
+    });
 
     window.addEventListener('resize', () => {
       this.resizeCanvas();
