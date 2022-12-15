@@ -7,10 +7,11 @@ import BubbleElementUI from '../UI/BubbleElementUI';
 import ListElementsUI from '../UI/ListElementsUI';
 
 export default class InteractiveView {
-  constructor(app, { assetModule, container }) {
+  constructor(app, { assetModule, container, canvasScaler }) {
     this.app = app;
     this.assetModule = assetModule;
     this.parentContainer = container;
+    this.canvasScaler = canvasScaler;
     this.container = null;
 
     this.initContainer();
@@ -41,6 +42,7 @@ export default class InteractiveView {
     this.listElements = new ListElementsUI(this.container, {
       assetModule: this.assetModule,
       parentContainer: this.parentContainer,
+      canvasScaler: this.canvasScaler,
     });
 
     this.listElements.on('select', (oldVal, newVal) => {
@@ -70,7 +72,7 @@ export default class InteractiveView {
     this.defaultStair = new StairElement(
       this.parentContainer,
       INTERACTIVE_ELEMENTS.OLDSTAIR,
-      { assetModule: this.assetModule },
+      { assetModule: this.assetModule, canvasScaler: this.canvasScaler },
     );
     this.defaultStair.showElement();
   }
@@ -91,7 +93,7 @@ export default class InteractiveView {
       UI_ELEMENTS.ICON_HAMMER,
       UI_ELEMENTS.ICON_HAMMER_BACK,
 
-      { assetModule: this.assetModule },
+      { assetModule: this.assetModule, canvasScaler: this.canvasScaler },
     );
 
     this.bubbleElement.on('click', () => {

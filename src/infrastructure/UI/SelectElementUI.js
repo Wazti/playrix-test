@@ -2,16 +2,18 @@ import * as PIXI from 'pixi.js';
 
 import TWEEN from '@tweenjs/tween.js';
 
-import { POSITIONS } from '../../utils/consts';
+import { POSITIONS, TYPES_RESIZE } from '../../utils/consts';
 import { UI_ELEMENTS } from '../../utils/filesPathes';
 import { initSpriteFromConfig } from '../../utils/helpers';
 
 export default class SelectElementUI {
-  constructor(container, containerKey, textureKey, { assetModule }) {
+  constructor(container, containerKey, textureKey, { assetModule, canvasScaler }) {
     this.parentContainer = container;
     this.assetModule = assetModule;
     this.containerKey = containerKey;
     this.textureKey = textureKey;
+
+    this.canvasScaler = canvasScaler;
 
     this.isSelect = false;
 
@@ -68,10 +70,12 @@ export default class SelectElementUI {
     this.container.sortableChildren = true;
     this.container.interactive = true;
     this.container.cursor = 'pointer';
+    this.container.name = this.containerKey;
 
-    this.container.x = POSITIONS[this.containerKey].DESKTOP.x;
-    this.container.y = POSITIONS[this.containerKey].DESKTOP.y;
+    this.container.x = POSITIONS[this.containerKey][this.canvasScaler.getTypeResize()].x;
+    this.container.y = POSITIONS[this.containerKey][this.canvasScaler.getTypeResize()].y;
 
+    this.canvasScaler.addDynamicElement(this.container);
     this.container.on('pointerdown', this.handleClick, this);
 
     this.parentContainer.addChild(this.container);

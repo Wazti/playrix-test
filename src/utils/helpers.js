@@ -21,6 +21,16 @@ function initSpriteFromConfig(key, texture) {
 
   return sprite;
 }
+function initSpriteFromPos(key, texture, pos) {
+  const sprite = new PIXI.Sprite(texture);
+  sprite.position.set(pos.x, pos.y);
+  sprite.name = key;
+  sprite.width = SPRITE_CONFIG[key].w;
+  sprite.height = SPRITE_CONFIG[key].h;
+  sprite.zIndex = SPRITE_CONFIG[key].z;
+
+  return sprite;
+}
 
 function delayedCall(delay, callback) {
   return new TWEEN.Tween({})
@@ -32,5 +42,5 @@ function delayedCall(delay, callback) {
 }
 
 export {
-  randomBetween, randomIntegerBetween, initSpriteFromConfig, delayedCall,
+  randomBetween, randomIntegerBetween, initSpriteFromConfig, delayedCall, initSpriteFromPos,
 };

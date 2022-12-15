@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 import TWEEN from '@tweenjs/tween.js';
 import { initSpriteFromConfig } from '../../utils/helpers';
 import { UI_ELEMENTS } from '../../utils/filesPathes';
-import { SPRITE_CONFIG, POSITIONS } from '../../utils/consts';
+import { SPRITE_CONFIG } from '../../utils/consts';
 
 export default class ContinueElementUI {
   constructor(container, { assetModule, canvasScaler }) {
@@ -15,13 +15,6 @@ export default class ContinueElementUI {
 
     this.createButton();
     this.button.on('pointerdown', this.handleClick, this);
-
-    document.addEventListener('mobile', (e) => {
-      this.changePositionMobile();
-    });
-    document.addEventListener('desktop', (e) => {
-      this.changePositionDesktop();
-    });
 
     this.pulseButton();
   }
@@ -54,14 +47,11 @@ export default class ContinueElementUI {
       .yoyo(true)
       .repeat(Infinity)
       .onUpdate(() => {
-        this.button.width = SPRITE_CONFIG.CONTINUE_BUTTON.w * tweenCfg.val;
-        this.button.height = SPRITE_CONFIG.CONTINUE_BUTTON.h * tweenCfg.val;
+        const size = SPRITE_CONFIG.CONTINUE_BUTTON;
+
+        this.button.width = size.w * tweenCfg.val;
+        this.button.height = size.h * tweenCfg.val;
       })
       .start();
-  }
-
-  changePositionMobile() {
-    this.button.x = POSITIONS.CONTINUE_BUTTON.MOBILE.x;
-    this.button.y = POSITIONS.CONTINUE_BUTTON.MOBILE.y;
   }
 }

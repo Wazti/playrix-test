@@ -38,6 +38,8 @@ export default class UIView {
       this.assetModule.getSpriteByKey(UI_ELEMENTS.LOGO),
     );
 
+    this.canvasScaler.addDynamicElement(this.logo);
+
     this.container.addChild(this.logo);
   }
 

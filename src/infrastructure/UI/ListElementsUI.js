@@ -6,10 +6,11 @@ import StairElement from '../elements/StairElement';
 import { INTERACTIVE_ELEMENTS, UI_ELEMENTS } from '../../utils/filesPathes';
 
 export default class ListElementsUI {
-  constructor(container, { assetModule, parentContainer }) {
+  constructor(container, { assetModule, parentContainer, canvasScaler }) {
     this.container = container;
     this.parentContainer = parentContainer;
     this.assetModule = assetModule;
+    this.canvasScaler = canvasScaler;
 
     this.eventEmitter = new PIXI.utils.EventEmitter();
 
@@ -44,7 +45,7 @@ export default class ListElementsUI {
       this.container,
       key,
       this.elements[key].miniKey,
-      { assetModule: this.assetModule },
+      { assetModule: this.assetModule, canvasScaler: this.canvasScaler },
     );
 
     this.elements[key].selectElement.on('click', () => this.handleSelect(key), this);
@@ -52,7 +53,8 @@ export default class ListElementsUI {
     this.elements[key].stairElement = new StairElement(
       this.parentContainer,
       this.elements[key].stairKey,
-      { assetModule: this.assetModule },
+
+      { assetModule: this.assetModule, canvasScaler: this.canvasScaler },
     );
   }
 

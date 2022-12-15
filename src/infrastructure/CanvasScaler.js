@@ -1,106 +1,128 @@
-import { SIZES, SIZE_MOBILE, POSITIONS } from '../utils/consts';
+import * as PIXI from 'pixi.js';
+
+import TWEEN from '@tweenjs/tween.js';
+import debounce from 'lodash.debounce';
+
+import {
+  TYPES_RESIZE,
+  SIZES, SIZES_MOBILE, POSITIONS, SPRITE_CONFIG_MOBILE, SPRITE_CONFIG,
+} from '../utils/consts';
+
+function getScaleAndSize(size) {
+  const scaleFactor = Math.min(
+    window.innerWidth / size.width,
+    window.innerHeight / size.height,
+  );
+  const newWidth = Math.ceil(size.width * scaleFactor);
+  const newHeight = Math.ceil(size.height * scaleFactor);
+
+  return { w: newWidth, h: newHeight, s: scaleFactor };
+}
 
 export default class CanvasScaler {
   constructor(app, container) {
     this.renderer = app.renderer;
     this.app = app;
+    this.parentContainer = container;
+
+    this.eventEmitter = new PIXI.utils.EventEmitter();
+
     this.defaultRationLandscape = SIZES.width / SIZES.height;
-    this.defaultRationPortrait = SIZE_MOBILE.width / SIZE_MOBILE.height;
+    this.defaultRationPortrait = SIZES_MOBILE.width / SIZES_MOBILE.height;
+
+    this.type = TYPES_RESIZE.DESKTOP;
+
     this.parentContainer = container;
     this.dynamicElements = [];
-    console.log(this.parentContainer);
-    this.eventDesktop = new CustomEvent('desktop');
-    this.eventMobile = new CustomEvent('mobile');
-    this.resizeHandler();
-    window.addEventListener('resize', () => {
+
+    this.debounceResize = debounce(() => {
       this.resizeHandler();
+    }, 200);
+
+    setTimeout(() => {
+      this.resizeCanvas();
+      this.resizeHandler();
+    }, 10);
+
+    window.addEventListener('resize', () => {
+      this.resizeCanvas();
+      this.debounceResize();
     }, false);
   }
 
+  resizeCanvas() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    this.type = (w > h) ? TYPES_RESIZE.DESKTOP : TYPES_RESIZE.MOBILE;
+
+    const newSize = this.getNewWidthHeight(w, h);
+
+    this.app.view.classList.remove('visible');
+
+    this.app.view.style.width = `${newSize.w}px`;
+    this.app.view.style.height = `${newSize.h}px`;
+  }
+
   resizeHandler() {
+    const screenSizes = this.isMobile() ? SIZES_MOBILE : SIZES;
+
+    const data = getScaleAndSize(screenSizes);
+
+    this.recalculatePositionsSprite();
+
+    this.parentContainer.scale.set(data.s);
+
+    this.eventEmitter.emit('resize', this.type);
+
+    this.renderer.resize(data.w, data.h);
+    this.app.view.classList.add('visible');
+  }
+
+  getNewWidthHeight(innerWidth, innerHeight) {
     let w = window.innerWidth;
     let h = window.innerHeight;
 
-    let scaleFactor;
-    let newWidth;
-    let newHeight;
-
     const ratio = window.innerWidth / window.innerHeight;
+    const finalRatio = innerWidth > innerHeight
+      ? this.defaultRationLandscape : this.defaultRationPortrait;
 
-    if (window.innerWidth > window.innerHeight) {
-      if (ratio >= this.defaultRationLandscape) {
-        w = window.innerHeight * this.defaultRationLandscape;
-      } else {
-        h = window.innerWidth / this.defaultRationLandscape;
-      }
-
-      this.app.view.width = 2780;
-      this.app.view.height = 1280;
-
-      this.parentContainer.x = 0;
-      this.parentContainer.y = 0;
-      this.parentContainer.pivot.x = 0;
-      scaleFactor = Math.min(
-        window.innerWidth / SIZES.width,
-        window.innerHeight / SIZES.height,
-      );
-      newWidth = Math.ceil(SIZES.width * scaleFactor);
-      newHeight = Math.ceil(SIZES.height * scaleFactor);
-      this.renderer.resize(newWidth, newHeight);
-      this.recalculatePositionsSprite(false);
+    if (ratio >= finalRatio) {
+      w = window.innerHeight * finalRatio;
     } else {
-      if (ratio > this.defaultRationPortrait) {
-        w = window.innerHeight * this.defaultRationPortrait;
-      } else {
-        h = window.innerWidth / this.defaultRationPortrait;
-      }
-      scaleFactor = Math.min(
-        window.innerWidth / SIZE_MOBILE.width,
-        window.innerHeight / SIZE_MOBILE.height,
-      );
-      newWidth = Math.ceil(SIZE_MOBILE.width * scaleFactor);
-      newHeight = Math.ceil(SIZE_MOBILE.height * scaleFactor);
-      // newHeight /= 1.2;
-      // newWidth /= 1.2;
-      scaleFactor *= 1.25;
-      this.renderer.resize(newWidth, newHeight);
-      this.parentContainer.pivot.x = (this.parentContainer.width / scaleFactor) / 2;
-      this.parentContainer.pivot.y = -2;
-      console.log(newWidth, newHeight, w, h, scaleFactor);
-      //   document.dispatchEvent(this.eventMobile);
-      this.recalculatePositionsSprite(true);
+      h = window.innerWidth / finalRatio;
     }
+    return { w, h };
+  }
 
-    this.parentContainer.scale.set(scaleFactor);
-    this.parentContainer.x = 0;
+  isMobile() {
+    return this.type === TYPES_RESIZE.MOBILE;
+  }
 
-    console.log(this.parentContainer);
-
-    this.app.view.style.width = `${w}px`;
-    this.app.view.style.height = `${h}px`;
+  getTypeResize() {
+    return this.type;
   }
 
   addDynamicElement(element) {
     this.dynamicElements.push(element);
   }
 
-  recalculatePositionsSprite(isMobile) {
-    console.log(this.dynamicElements);
+  recalculatePositionsSprite() {
     this.dynamicElements.forEach((item) => {
-      const size = isMobile ? POSITIONS[item.name].MOBILE : POSITIONS[item.name].DESKTOP;
-      console.log(item);
+      const pos = this.isMobile() ? POSITIONS[item.name].MOBILE : POSITIONS[item.name].DESKTOP;
+      const size = this.isMobile() ? SPRITE_CONFIG_MOBILE[item.name] : SPRITE_CONFIG[item.name];
+      if (pos) {
+        item.x = pos.x;
+        item.y = pos.y;
+      }
       if (size) {
-        item.x = size.x;
-        item.y = size.y;
+        item.width = size.w;
+        item.height = size.h;
       }
     });
   }
-  // Create the event
 
-  // Dispatch/Trigger/Fire the event
-
-  // The dynamic width and height lets us do some smart
-  // scaling of the main game content; here we're just
-  // using it to maintain a 9:16 aspect ratio and giving
-  // our scenes a 375x667 stage to work with
+  on(event, fn, context) {
+    this.eventEmitter.on(event, fn, context);
+  }
 }

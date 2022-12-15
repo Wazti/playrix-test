@@ -3,13 +3,15 @@ import * as PIXI from 'pixi.js';
 import TWEEN from '@tweenjs/tween.js';
 
 import { POSITIONS } from '../../utils/consts';
+import { UI_ELEMENTS } from '../../utils/filesPathes';
 import { initSpriteFromConfig, delayedCall } from '../../utils/helpers';
 
 export default class BubbleElementUI {
-  constructor(container, forward, back, { assetModule }) {
+  constructor(container, forward, back, { assetModule, canvasScaler }) {
     this.parentContainer = container;
     this.forwardKey = forward;
     this.backKey = back;
+    this.canvasScaler = canvasScaler;
     this.eventEmitter = new PIXI.utils.EventEmitter();
     this.assetModule = assetModule;
 
@@ -38,11 +40,13 @@ export default class BubbleElementUI {
     this.container.sortableChildren = true;
     this.container.interactive = true;
     this.container.cursor = 'pointer';
+    this.container.name = UI_ELEMENTS.ICON_HAMMER_CONTAINER;
 
     this.container.x = POSITIONS.ICON_HAMMER_CONTAINER.DESKTOP.x;
     this.container.y = POSITIONS.ICON_HAMMER_CONTAINER.DESKTOP.y;
 
     this.parentContainer.addChild(this.container);
+    this.canvasScaler.addDynamicElement(this.container);
   }
 
   initSprite() {
@@ -78,12 +82,18 @@ export default class BubbleElementUI {
   }
 
   animateContainer() {
-    this.container.y -= 50;
     this.container.alpha = 0;
-    const tweenY = new TWEEN.Tween(this.container)
-      .to({ y: this.container.y + 50 }, 700)
+    const cfg = { val: 0 };
+    const tweenY = new TWEEN.Tween(cfg)
+      .to({ val: 1 }, 700)
       .easing(TWEEN.Easing.Elastic.InOut)
       .delay(1000)
+      .onUpdate(() => {
+        const pos = (this.canvasScaler.isMobile() ? POSITIONS[this.container.name].MOBILE
+          : POSITIONS[this.container.name].DESKTOP);
+
+        this.container.y = pos.y - 50 * (1 - cfg.val);
+      })
       .onComplete(() => {
         this.delayedHummer = delayedCall(1500, () => this.animateHummer());
       })

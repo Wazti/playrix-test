@@ -31,10 +31,12 @@ export default class App {
     this.decorView = new DecorView(this.app, {
       assetModule: this.assetModule,
       container: this.container,
+      canvasScaler: this.canvasScaler,
     });
 
     this.interactiveView = new InteractiveView(this.app, {
       assetModule: this.assetModule,
+      canvasScaler: this.canvasScaler,
       container: this.container,
     });
 
@@ -53,6 +55,7 @@ export default class App {
     this.finalView = new FinalView(this.app, {
       assetModule: this.assetModule,
       container: this.container,
+      canvasScaler: this.canvasScaler,
     });
   }
 
@@ -60,15 +63,11 @@ export default class App {
     this.app = new PIXI.Application({
       ...SIZES,
       resolution: window.devicePixelRatio || 1,
-      //  resizeTo: window,
       autoDensity: true,
-      // backgroundColor: 0x000000,
     });
+
     document.body.appendChild(this.app.view);
-
-    // this.app.renderer.view.id = 'pixi-canvas';
     PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
-
     this.app.ticker.add((dt) => this.update(dt));
   }
 
