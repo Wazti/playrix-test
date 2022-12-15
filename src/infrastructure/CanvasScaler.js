@@ -64,8 +64,6 @@ export default class CanvasScaler {
 
     this.app.view.style.width = `${newSize.w}px`;
     this.app.view.style.height = `${newSize.h}px`;
-
-    console.log(document.documentElement.clientHeight, window.innerHeight);
   }
 
   resizeHandler() {
