@@ -13,7 +13,7 @@ import {
 function getScaleAndSize(size) {
   const scaleFactor = Math.min(
     window.innerWidth / size.width,
-    window.innerHeight / size.height,
+    document.documentElement.clientHeight / size.height,
   );
   const newWidth = Math.ceil(size.width * scaleFactor);
   const newHeight = Math.ceil(size.height * scaleFactor);
@@ -54,7 +54,7 @@ export default class CanvasScaler {
 
   resizeCanvas() {
     const w = window.innerWidth;
-    const h = window.innerHeight;
+    const h = document.documentElement.clientHeight;
 
     this.type = (w > h) ? TYPES_RESIZE.DESKTOP : TYPES_RESIZE.MOBILE;
 
@@ -64,6 +64,8 @@ export default class CanvasScaler {
 
     this.app.view.style.width = `${newSize.w}px`;
     this.app.view.style.height = `${newSize.h}px`;
+
+    console.log(document.documentElement.clientHeight, window.innerHeight);
   }
 
   resizeHandler() {
@@ -83,16 +85,16 @@ export default class CanvasScaler {
 
   getNewWidthHeight(innerWidth, innerHeight) {
     let w = window.innerWidth;
-    let h = window.innerHeight;
+    let h = document.documentElement.clientHeight;
 
-    const ratio = window.innerWidth / window.innerHeight;
+    const ratio = w / h;
     const finalRatio = innerWidth > innerHeight
       ? this.defaultRationLandscape : this.defaultRationPortrait;
 
     if (ratio >= finalRatio) {
-      w = window.innerHeight * finalRatio;
+      w = h * finalRatio;
     } else {
-      h = window.innerWidth / finalRatio;
+      h = w / finalRatio;
     }
     return { w, h };
   }
