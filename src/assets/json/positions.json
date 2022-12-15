@@ -1,0 +1,256 @@
+{
+  "BACKGROUND": {
+    "DESKTOP": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  "BACKGROUND_MOBILE": {
+    "DESKTOP": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  "SOFA": {
+    "DESKTOP": {
+      "x": 127,
+      "y": 324
+    },
+    "MOBILE": {
+      "x": -27,
+      "y": 724
+    }
+  },
+  "GLOBE": {
+    "DESKTOP": {
+      "x": 87,
+      "y": 109
+    },
+    "MOBILE": {
+      "x": 10,
+      "y": 1000
+    }
+  },
+  "PLANT": {
+    "DESKTOP": {
+      "x": 456,
+      "y": -42
+    },
+    "MOBILE": {
+      "x": 450,
+      "y": 200
+    }
+  },
+  "PLANT_SECOND": {
+    "DESKTOP": {
+      "x": 1135,
+      "y": 164
+    },
+    "MOBILE": {
+      "x": 500,
+      "y": 1050
+    }
+  },
+  "BOOKSTAND": {
+    "DESKTOP": {
+      "x": 834,
+      "y": -29
+    },
+    "MOBILE": {
+      "x": 50,
+      "y": 24
+    }
+  },
+  "TABLE": {
+    "DESKTOP": {
+      "x": 202,
+      "y": 196
+    },
+    "MOBILE": {
+      "x": -27,
+      "y": 524
+    }
+  },
+  "AUSTIN": {
+    "DESKTOP": {
+      "x": 696,
+      "y": 113
+    },
+    "MOBILE": {
+      "x": 150,
+      "y": 150
+    }
+  },
+  "PLANT_THIRD": {
+    "DESKTOP": {
+      "x": 1122,
+      "y": 438
+    },
+    "MOBILE": {
+      "x": 450,
+      "y": 650
+    }
+  },
+  "OLDSTAIR": {
+    "DESKTOP": {
+      "x": 833,
+      "y": 104
+    }, 
+    "MOBILE": {
+      "x": 140,
+      "y": 300
+    }
+  },
+  "STAIR_FIRST": {
+    "DESKTOP": {
+      "x": 910,
+      "y": 30
+    },
+    "MOBILE": {
+      "x": 240,
+      "y": 200
+    }
+  },
+  "STAIR_SECOND": {
+    "DESKTOP": {
+      "x": 910,
+      "y": 30
+    },
+    "MOBILE": {
+      "x": 240,
+      "y": 200
+    }
+  },
+  "STAIR_THIRD": {
+    "DESKTOP": {
+      "x": 910,
+      "y": 30
+    },
+    "MOBILE": {
+      "x": 240,
+      "y": 200
+    }
+  },
+  "ICON_HAMMER_CONTAINER": {
+    "DESKTOP": {
+      "x": 1147,
+      "y": 298
+    },
+    "MOBILE": {
+      "x": 400,
+      "y": 550
+    }
+  },
+  "ICON_HAMMER": {
+    "DESKTOP": {
+      "x": 5,
+      "y": -12
+    }
+  },
+  "ICON_HAMMER_BACK": {
+    "DESKTOP": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  "CIRCLEUI": {
+    "DESKTOP": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  "CIRCLEUI_CHOSEN": {
+    "DESKTOP": {
+      "x": 0,
+      "y": -4
+    }
+  },
+  "SELECT_FIRST": {
+    "DESKTOP": {
+      "x": 892,
+      "y": 85
+    },
+    "MOBILE": {
+      "x": 292,
+      "y": 505
+    }
+  },
+  "SELECT_SECOND": {
+    "DESKTOP": {
+      "x": 1020,
+      "y": 85
+    },
+    "MOBILE": {
+      "x": 392,
+      "y": 405
+    }
+  },
+  "SELECT_THIRD": {
+    "DESKTOP": {
+      "x": 1148,
+      "y": 85
+    },
+    "MOBILE": {
+      "x": 492,
+      "y": 305
+    }
+  },
+  "MINI_FIRST": {
+    "DESKTOP": {
+      "x": 5,
+      "y": -10
+    }
+  },
+  "MINI_SECOND": {
+    "DESKTOP": {
+      "x": 23,
+      "y": -18
+    }
+  },
+  "MINI_THIRD": {
+    "DESKTOP": {
+      "x": 20,
+      "y": -15
+    }
+  },
+  "OK_BUTTON": {
+    "DESKTOP": {
+      "x": 0,
+      "y": 90
+    },
+    "MOBILE": {
+      "x": 250,
+      "y": 1000
+    }
+  },
+  "CONTINUE_BUTTON": {
+    "DESKTOP": {
+      "x": 695,
+      "y": 570
+    },
+    "MOBILE": {
+      "x": 320,
+      "y": 1050
+    }
+  },
+  "LOGO": {
+    "DESKTOP": {
+      "x": 40,
+      "y": 10
+    },
+    "MOBILE": {
+      "x": 180,
+      "y": 10
+    }
+  },
+  "FINAL": {
+    "DESKTOP": {
+      "x": 695,
+      "y": 250
+    },
+    "MOBILE": {
+      "x": 320,
+      "y": 500,
+    }
+  }
+}

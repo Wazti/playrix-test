@@ -1,104 +1,32 @@
+import POSITIONS from '../assets/json/positions.json';
+
 const SIZES = Object.freeze({
   width: 1390,
   height: 640,
 });
+const SIZES_MOBILE = Object.freeze({
+  width: 640,
+  height: 1136,
+});
 
-const POSITIONS = Object.freeze({
-  BACKGROUND: {
-    DESKTOP: { x: 0, y: 0 },
-  },
-  SOFA: {
-    DESKTOP: { x: 127, y: 324 },
-  },
-  GLOBE: {
-    DESKTOP: { x: 87, y: 109 },
-  },
-  PLANT: {
-    DESKTOP: { x: 456, y: -42 },
-  },
-  PLANT_SECOND: {
-    DESKTOP: { x: 1135, y: 164 },
-  },
-  BOOKSTAND: {
-    DESKTOP: { x: 834, y: -29 },
-  },
-  TABLE: {
-    DESKTOP: { x: 202, y: 196 },
-  },
-  AUSTIN: {
-    DESKTOP: { x: 696, y: 113 },
-  },
-  PLANT_THIRD: {
-    DESKTOP: { x: 1122, y: 438 },
-  },
-  OLDSTAIR: {
-    DESKTOP: { x: 833, y: 104 },
-  },
-  STAIR_FIRST: {
-    DESKTOP: { x: 910, y: 30 },
-  },
-  STAIR_SECOND: {
-    DESKTOP: { x: 910, y: 30 },
-  },
+const TYPES_RESIZE = Object.freeze({
+  DESKTOP: 'DESKTOP',
+  MOBILE: 'MOBILE',
+});
+const SPRITE_CONFIG_MOBILE = Object.freeze({
 
-  STAIR_THIRD: {
-    DESKTOP: { x: 910, y: 30 },
-  },
-
-  ICON_HAMMER_CONTAINER: {
-    DESKTOP: { x: 1147, y: 298 },
-  },
-  ICON_HAMMER: {
-    DESKTOP: { x: 5, y: -12 },
-  },
-  ICON_HAMMER_BACK: {
-    DESKTOP: { x: 0, y: 0 },
-  },
-  CIRCLEUI: {
-    DESKTOP: { x: 0, y: 0 },
-  },
-  CIRCLEUI_CHOSEN: {
-    DESKTOP: { x: 0, y: -4 },
-  },
-  SELECT_FIRST: {
-    DESKTOP: { x: 892, y: 85 },
-  },
-  SELECT_SECOND: {
-    DESKTOP: { x: 1020, y: 85 },
-  },
-  SELECT_THIRD: {
-    DESKTOP: { x: 1148, y: 85 },
-  },
-  MINI_FIRST: {
-    DESKTOP: { x: 5, y: -10 },
-  },
-  MINI_SECOND: {
-    DESKTOP: { x: 23, y: -18 },
-  },
-  MINI_THIRD: {
-    DESKTOP: { x: 20, y: -15 },
-  },
-  OK_BUTTON: {
-    DESKTOP: { x: 0, y: 90 },
-  },
-  CONTINUE_BUTTON: {
-    DESKTOP: { x: 695, y: 570 },
-  },
-  LOGO: {
-    DESKTOP: { x: 40, y: 10 },
-  },
-  FINAL: {
-    DESKTOP: {
-      x: 695, y: 250,
-    },
-  },
 });
 
 const SPRITE_CONFIG = Object.freeze({
   BACKGROUND: {
     w: SIZES.width,
     h: SIZES.height,
-    z: 1,
+    z: 0,
+  },
+  BACKGROUND_MOBILE: {
+    w: SIZES_MOBILE.width,
+    h: SIZES_MOBILE.height,
+    z: 0,
   },
   SOFA: {
     w: 375,
@@ -131,7 +59,7 @@ const SPRITE_CONFIG = Object.freeze({
     z: 1,
   },
   AUSTIN: {
-    z: 1,
+    z: 2,
     w: 87,
     h: 306,
 
@@ -219,5 +147,6 @@ const SPRITE_CONFIG = Object.freeze({
 });
 
 export {
-  SIZES, POSITIONS, SPRITE_CONFIG,
+  SIZES, POSITIONS, SPRITE_CONFIG, SIZES_MOBILE, SPRITE_CONFIG_MOBILE,
+  TYPES_RESIZE,
 };

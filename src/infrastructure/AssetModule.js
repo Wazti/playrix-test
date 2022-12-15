@@ -4,7 +4,7 @@ import {
   FILES, STATIC_ELEMENTS, ELEMENTS_DECOR, INTERACTIVE_ELEMENTS, UI_ELEMENTS,
 } from '../utils/filesPathes';
 
-export default class LoadingModule {
+export default class AssetModule {
   constructor() {
     this.loader = Loader.shared;
   }

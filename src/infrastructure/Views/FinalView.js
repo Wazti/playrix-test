@@ -2,20 +2,25 @@ import * as PIXI from 'pixi.js';
 
 import TWEEN from '@tweenjs/tween.js';
 
-import { SIZES, SPRITE_CONFIG } from '../../utils/consts';
+import {
+  SIZES, SPRITE_CONFIG, TYPES_RESIZE, SIZES_MOBILE, POSITIONS,
+} from '../../utils/consts';
 import { UI_ELEMENTS } from '../../utils/filesPathes';
-import { initSpriteFromConfig } from '../../utils/helpers';
+import { initSpriteFromPos } from '../../utils/helpers';
 
 export default class FinalView {
-  constructor(app, { loaderModule, container }) {
+  constructor(app, { assetModule, container, canvasScaler }) {
     this.app = app;
-    this.loadingModule = loaderModule;
+    this.assetModule = assetModule;
     this.parentContainer = container;
+    this.canvasScaler = canvasScaler;
     this.loadSprite();
+
+    this.canvasScaler.on('resize', this.handleResize, this);
   }
 
   loadSprite() {
-    this.loadingModule.loadSprite(UI_ELEMENTS.FINAL);
+    this.assetModule.loadSprite(UI_ELEMENTS.FINAL);
   }
 
   showView() {
@@ -34,6 +39,19 @@ export default class FinalView {
     this.parentContainer.addChild(this.container);
   }
 
+  handleResize(type) {
+    if (!this.background) return;
+
+    if (type === TYPES_RESIZE.DESKTOP) {
+      this.background.width = SIZES.width;
+      this.background.height = SIZES.height;
+      return;
+    }
+
+    this.background.width = SIZES_MOBILE.width;
+    this.background.height = SIZES_MOBILE.height;
+  }
+
   createBackground() {
     this.background = new PIXI.Sprite(PIXI.Texture.WHITE);
     this.background.alpha = 0;
@@ -46,17 +64,22 @@ export default class FinalView {
       .to({ alpha: 0.5 }, 600)
       .easing(TWEEN.Easing.Cubic.InOut)
       .start();
+
+    this.handleResize();
   }
 
   createFinalPicture() {
-    this.final = initSpriteFromConfig(
+    this.final = initSpriteFromPos(
       UI_ELEMENTS.FINAL,
-      this.loadingModule.getSpriteByKey(UI_ELEMENTS.FINAL),
+      this.assetModule.getSpriteByKey(UI_ELEMENTS.FINAL),
+      POSITIONS[UI_ELEMENTS.FINAL][this.canvasScaler.getTypeResize()],
     );
 
     this.final.anchor.set(0.5);
     this.final.width = 0;
     this.final.height = 0;
+    this.canvasScaler.addDynamicElement(this.final);
+
     const twf = { val: 0 };
     const finalTween = new TWEEN.Tween(twf)
       .to({ val: 1 }, 400)

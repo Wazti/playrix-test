@@ -1,4 +1,5 @@
 import background from '../assets/images/background.jpeg';
+import backgroundPortrait from '../assets/images/background_mobile.jpeg';
 
 import bookStand from '../assets/images/decor/book_stand.png';
 import globe from '../assets/images/decor/globe.png';
@@ -27,6 +28,7 @@ import final from '../assets/images/ui/finalPicture.png';
 
 const FILES = Object.freeze({
   BACKGROUND: background,
+  BACKGROUND_MOBILE: backgroundPortrait,
   BOOKSTAND: bookStand,
   GLOBE: globe,
   PLANT: plant,
@@ -54,6 +56,7 @@ const FILES = Object.freeze({
 
 const STATIC_ELEMENTS = Object.freeze({
   BACKGROUND: 'BACKGROUND',
+  BACKGROUND_MOBILE: 'BACKGROUND_MOBILE',
   AUSTIN: 'AUSTIN',
 });
 const ELEMENTS_DECOR = Object.freeze({
@@ -74,6 +77,7 @@ const INTERACTIVE_ELEMENTS = Object.freeze({
 const UI_ELEMENTS = Object.freeze({
   ICON_HAMMER_BACK: 'ICON_HAMMER_BACK',
   ICON_HAMMER: 'ICON_HAMMER',
+  ICON_HAMMER_CONTAINER: 'ICON_HAMMER_CONTAINER',
   CIRCLEUI: 'CIRCLEUI',
   CIRCLEUI_CHOSEN: 'CIRCLEUI_CHOSEN',
   MINI_FIRST: 'MINI_FIRST',

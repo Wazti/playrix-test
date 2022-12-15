@@ -6,9 +6,10 @@ import { UI_ELEMENTS } from '../../utils/filesPathes';
 import { SPRITE_CONFIG } from '../../utils/consts';
 
 export default class ContinueElementUI {
-  constructor(container, { loaderModule }) {
+  constructor(container, { assetModule, canvasScaler }) {
     this.parentContainer = container;
-    this.loaderModule = loaderModule;
+    this.assetModule = assetModule;
+    this.canvasScaler = canvasScaler;
 
     this.eventEmitter = new PIXI.utils.EventEmitter();
 
@@ -25,12 +26,13 @@ export default class ContinueElementUI {
   createButton() {
     this.button = initSpriteFromConfig(
       UI_ELEMENTS.CONTINUE_BUTTON,
-      this.loaderModule.getSpriteByKey(UI_ELEMENTS.CONTINUE_BUTTON),
+      this.assetModule.getSpriteByKey(UI_ELEMENTS.CONTINUE_BUTTON),
     );
-
     this.button.anchor.set(0.5);
     this.button.interactive = true;
+
     this.parentContainer.addChild(this.button);
+    this.canvasScaler.addDynamicElement(this.button);
   }
 
   on(event, fn, context) {
@@ -45,8 +47,10 @@ export default class ContinueElementUI {
       .yoyo(true)
       .repeat(Infinity)
       .onUpdate(() => {
-        this.button.width = SPRITE_CONFIG.CONTINUE_BUTTON.w * tweenCfg.val;
-        this.button.height = SPRITE_CONFIG.CONTINUE_BUTTON.h * tweenCfg.val;
+        const size = SPRITE_CONFIG.CONTINUE_BUTTON;
+
+        this.button.width = size.w * tweenCfg.val;
+        this.button.height = size.h * tweenCfg.val;
       })
       .start();
   }
